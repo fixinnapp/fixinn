@@ -273,7 +273,6 @@ export default function Home() {
           textAlign: 'center',
         }}>
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <img src="/logo.png" alt="FixInn" style={{ height: '48px', marginBottom: '32px', filter: 'brightness(0) invert(1)' }} />
             <h2 style={{
               fontSize: '44px',
               fontWeight: '800',
