@@ -11,19 +11,19 @@ export default function Home() {
         {/* Navbar */}
         <nav className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-gray-100">
           <div className="max-w-[1100px] mx-auto px-4 py-4 flex items-center justify-between">
+
             <img src="/logo.png" className="h-8" />
 
-            <div className="hidden sm:flex items-center gap-4">
-              <a href="/login" className="text-sm font-medium text-gray-600 hover:text-black">
+            {/* RIGHT CORNER FIX */}
+            <div className="flex items-center justify-end w-full">
+              <a
+                href="/login"
+                className="text-sm font-medium text-gray-600 hover:text-black"
+              >
                 Staff login
               </a>
-              <a
-                href="mailto:your@email.com"
-                className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold shadow-sm hover:bg-blue-700"
-              >
-                Request demo
-              </a>
             </div>
+
           </div>
         </nav>
 
@@ -46,13 +46,19 @@ export default function Home() {
               Place a QR code on the wall. Staff and guests scan it to report problems in seconds — no app, no login, no back-and-forth emails. Everything goes directly to the right person with location and context included.
             </p>
 
-            <div className="flex justify-center gap-3">
-              <a className="flex-1 sm:flex-none text-center px-4 sm:px-6 py-3 rounded-lg bg-blue-600 text-white text-sm sm:text-base font-semibold shadow hover:bg-blue-700">
+            {/* HERO CTA FIX */}
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+
+              {/* Primary */}
+              <a className="px-6 py-3 rounded-lg bg-blue-600 text-white text-sm sm:text-base font-semibold shadow hover:bg-blue-700">
                 Get a free pilot
               </a>
-              <a className="flex-1 sm:flex-none text-center px-4 sm:px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm sm:text-base font-medium hover:bg-gray-50">
-                See demo
+
+              {/* Secondary */}
+              <a className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm sm:text-base font-medium hover:bg-gray-50">
+                Request a demo
               </a>
+
             </div>
 
           </div>
@@ -94,7 +100,6 @@ export default function Home() {
                   className="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-md transition"
                 >
 
-                  {/* ICON + TITLE (clean SaaS style) */}
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-9 h-9 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-base">
                       {item.icon}
