@@ -1,322 +1,184 @@
 export default function Home() {
   return (
     <>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
-      <div style={{ fontFamily: '"DM Sans", sans-serif', background: '#ffffff', minHeight: '100vh' }}>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap"
+        rel="stylesheet"
+      />
+
+      <div className="font-[DM_Sans] bg-white min-h-screen">
 
         {/* Navbar */}
-        <nav style={{
-          padding: '0 40px',
-          height: '72px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid #eaecf0',
-          background: '#ffffff',
-          position: 'sticky' as const,
-          top: 0,
-          zIndex: 10,
-        }}>
-          <img src="/logo.png" alt="FixInn" style={{ height: '40px' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <a href="/login" style={{
-              padding: '10px 20px',
-              borderRadius: '10px',
-              border: '1.5px solid #eaecf0',
-              background: '#ffffff',
-              color: '#444',
-              fontSize: '14px',
-              fontWeight: '600',
-              textDecoration: 'none',
-            }}>
+        <nav className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 md:px-10 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0">
+          <img src="/logo.png" alt="FixInn" className="h-8 md:h-10" />
+
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <a
+              href="/login"
+              className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 text-center"
+            >
               Staff login
             </a>
-            <a href="mailto:aygulismayilova99@gmail.com" style={{
-              padding: '10px 20px',
-              borderRadius: '10px',
-              border: 'none',
-              background: '#2B5BF5',
-              color: '#ffffff',
-              fontSize: '14px',
-              fontWeight: '700',
-              textDecoration: 'none',
-              boxShadow: '0 4px 12px rgba(43,91,245,0.25)',
-            }}>
+
+            <a
+              href="mailto:aygulismayilova99@gmail.com"
+              className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold text-center shadow-md"
+            >
               Request a demo →
             </a>
           </div>
         </nav>
 
         {/* Hero */}
-        <div style={{
-          maxWidth: '900px',
-          margin: '0 auto',
-          padding: '100px 24px 80px',
-          textAlign: 'center',
-        }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: '#f0f4ff',
-            padding: '6px 16px',
-            borderRadius: '20px',
-            marginBottom: '28px',
-          }}>
-            <div style={{ width: '8px', height: '8px', background: '#2B5BF5', borderRadius: '50%' }} />
-            <span style={{ fontSize: '13px', fontWeight: '600', color: '#2B5BF5' }}>
+        <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-center">
+
+          <div className="inline-flex items-center gap-2 bg-blue-50 px-4 py-1 rounded-full mb-6">
+            <div className="w-2 h-2 bg-blue-600 rounded-full" />
+            <span className="text-xs font-semibold text-blue-600">
               Now available in Norway
             </span>
           </div>
 
-          <h1 style={{
-            fontSize: '64px',
-            fontWeight: '800',
-            color: '#0D0D0D',
-            margin: '0 0 24px',
-            letterSpacing: '-2px',
-            lineHeight: '1.05',
-          }}>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-black leading-tight tracking-tight mb-6">
             Facility issues,<br />
-            <span style={{ color: '#2B5BF5' }}>reported instantly.</span>
+            <span className="text-blue-600">reported instantly.</span>
           </h1>
 
-          <p style={{
-            fontSize: '20px',
-            color: '#666',
-            maxWidth: '580px',
-            margin: '0 auto 48px',
-            lineHeight: '1.6',
-          }}>
+          <p className="text-base md:text-lg text-gray-600 max-w-xl mx-auto mb-10 leading-relaxed">
             Place a QR code on the wall. Staff and guests scan it to report problems in seconds — no app, no login, no back-and-forth emails.
           </p>
 
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' as const }}>
-            <a href="mailto:aygulismayilova99@gmail.com" style={{
-              padding: '16px 32px',
-              borderRadius: '14px',
-              background: '#2B5BF5',
-              color: '#ffffff',
-              fontSize: '16px',
-              fontWeight: '700',
-              textDecoration: 'none',
-              boxShadow: '0 4px 16px rgba(43,91,245,0.3)',
-            }}>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="mailto:aygulismayilova99@gmail.com"
+              className="px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow-lg"
+            >
               Get a free pilot →
             </a>
-            <a href="/report/main-lobby" style={{
-              padding: '16px 32px',
-              borderRadius: '14px',
-              background: '#f7f8fc',
-              color: '#444',
-              fontSize: '16px',
-              fontWeight: '600',
-              textDecoration: 'none',
-              border: '1.5px solid #eaecf0',
-            }}>
+
+            <a
+              href="/report/main-lobby"
+              className="px-6 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-700 font-semibold"
+            >
               See a demo form
             </a>
           </div>
-        </div>
+        </section>
 
         {/* How it works */}
-        <div style={{
-          background: '#f7f8fc',
-          borderTop: '1px solid #eaecf0',
-          borderBottom: '1px solid #eaecf0',
-          padding: '80px 24px',
-        }}>
-          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-            <p style={{
-              textAlign: 'center',
-              fontSize: '13px',
-              fontWeight: '700',
-              color: '#2B5BF5',
-              letterSpacing: '2px',
-              textTransform: 'uppercase' as const,
-              marginBottom: '16px',
-            }}>
+        <section className="bg-gray-50 border-y border-gray-200 px-4 py-16 md:py-20">
+          <div className="max-w-4xl mx-auto">
+
+            <p className="text-center text-xs font-bold text-blue-600 tracking-widest uppercase mb-3">
               How it works
             </p>
-            <h2 style={{
-              textAlign: 'center',
-              fontSize: '40px',
-              fontWeight: '800',
-              color: '#0D0D0D',
-              margin: '0 0 56px',
-              letterSpacing: '-1px',
-            }}>
+
+            <h2 className="text-center text-2xl md:text-4xl font-extrabold mb-12">
               Three steps. That's it.
             </h2>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '24px',
-            }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
                   step: '01',
                   title: 'Scan',
-                  description: 'Someone spots a problem and scans the QR code on the wall. Opens instantly in their browser.',
+                  description: 'Someone spots a problem and scans the QR code on the wall.',
                   emoji: '📱',
                 },
                 {
                   step: '02',
                   title: 'Report',
-                  description: 'They select the issue type, describe the problem, and hit submit. Takes under 30 seconds.',
+                  description: 'They describe the issue and submit in under 30 seconds.',
                   emoji: '📝',
                 },
                 {
                   step: '03',
                   title: 'Fix',
-                  description: 'The facility manager sees it instantly in their dashboard with location, time, and details already filled in.',
+                  description: 'Manager sees it instantly with full details.',
                   emoji: '🔧',
                 },
               ].map(item => (
-                <div key={item.step} style={{
-                  background: '#ffffff',
-                  borderRadius: '20px',
-                  padding: '32px',
-                  border: '1px solid #eaecf0',
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-                }}>
-                  <div style={{
-                    width: '52px',
-                    height: '52px',
-                    background: '#f0f4ff',
-                    borderRadius: '14px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '24px',
-                    marginBottom: '20px',
-                  }}>
+                <div key={item.step} className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+
+                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-xl mb-4">
                     {item.emoji}
                   </div>
-                  <p style={{ fontSize: '12px', fontWeight: '700', color: '#2B5BF5', letterSpacing: '1px', margin: '0 0 8px' }}>
+
+                  <p className="text-xs font-bold text-blue-600 mb-1">
                     STEP {item.step}
                   </p>
-                  <h3 style={{ fontSize: '22px', fontWeight: '700', color: '#0D0D0D', margin: '0 0 12px' }}>
+
+                  <h3 className="text-lg font-bold mb-2">
                     {item.title}
                   </h3>
-                  <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', margin: 0 }}>
+
+                  <p className="text-sm text-gray-600">
                     {item.description}
                   </p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Who it's for */}
-        <div style={{ padding: '80px 24px' }}>
-          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-            <p style={{
-              textAlign: 'center',
-              fontSize: '13px',
-              fontWeight: '700',
-              color: '#2B5BF5',
-              letterSpacing: '2px',
-              textTransform: 'uppercase' as const,
-              marginBottom: '16px',
-            }}>
+        <section className="px-4 py-16 md:py-20">
+          <div className="max-w-4xl mx-auto">
+
+            <p className="text-center text-xs font-bold text-blue-600 tracking-widest uppercase mb-3">
               Who it's for
             </p>
-            <h2 style={{
-              textAlign: 'center',
-              fontSize: '40px',
-              fontWeight: '800',
-              color: '#0D0D0D',
-              margin: '0 0 56px',
-              letterSpacing: '-1px',
-            }}>
+
+            <h2 className="text-center text-2xl md:text-4xl font-extrabold mb-12">
               Built for any facility.
             </h2>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '16px',
-            }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {[
-                { emoji: '🏨', title: 'Hotels', description: 'Guests and housekeeping report room and common area issues instantly.' },
-                { emoji: '🏢', title: 'Office buildings', description: 'Staff report maintenance issues without calling or emailing anyone.' },
-                { emoji: '🏫', title: 'Schools', description: 'Teachers and students flag facility problems across the whole campus.' },
-                { emoji: '🏋️', title: 'Gyms & sports centers', description: 'Members report broken equipment before it becomes a bigger problem.' },
-                { emoji: '🏪', title: 'Shopping centers', description: 'Tenants and visitors report shared area issues to one central team.' },
-                { emoji: '🏗️', title: 'Property managers', description: 'Manage multiple buildings from one dashboard with full history.' },
+                { emoji: '🏨', title: 'Hotels' },
+                { emoji: '🏢', title: 'Offices' },
+                { emoji: '🏫', title: 'Schools' },
+                { emoji: '🏋️', title: 'Gyms' },
+                { emoji: '🏪', title: 'Shopping centers' },
+                { emoji: '🏗️', title: 'Property managers' },
               ].map(item => (
-                <div key={item.title} style={{
-                  background: '#f7f8fc',
-                  borderRadius: '16px',
-                  padding: '24px',
-                  border: '1px solid #eaecf0',
-                }}>
-                  <div style={{ fontSize: '28px', marginBottom: '12px' }}>{item.emoji}</div>
-                  <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#0D0D0D', margin: '0 0 8px' }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.5', margin: 0 }}>
-                    {item.description}
-                  </p>
+                <div key={item.title} className="bg-gray-50 rounded-xl p-5 border border-gray-200">
+                  <div className="text-2xl mb-2">{item.emoji}</div>
+                  <h3 className="font-bold">{item.title}</h3>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
         {/* CTA */}
-        <div style={{
-          background: '#0D0D0D',
-          padding: '80px 24px',
-          textAlign: 'center',
-        }}>
-          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <h2 style={{
-              fontSize: '44px',
-              fontWeight: '800',
-              color: '#ffffff',
-              margin: '0 0 16px',
-              letterSpacing: '-1px',
-            }}>
+        <section className="bg-black text-white px-4 py-16 md:py-20 text-center">
+          <div className="max-w-xl mx-auto">
+
+            <h2 className="text-2xl md:text-4xl font-extrabold mb-4">
               Ready to try it?
             </h2>
-            <p style={{ fontSize: '18px', color: '#888', margin: '0 0 40px', lineHeight: '1.6' }}>
-              We're offering free pilots to facilities in Norway. Get set up in 30 minutes — we place the QR codes ourselves.
+
+            <p className="text-gray-400 mb-8">
+              Free pilots in Norway. Setup in 30 minutes.
             </p>
-            <a href="mailto:aygulismayilova99@gmail.com" style={{
-              display: 'inline-block',
-              padding: '18px 40px',
-              borderRadius: '14px',
-              background: '#2B5BF5',
-              color: '#ffffff',
-              fontSize: '18px',
-              fontWeight: '700',
-              textDecoration: 'none',
-              boxShadow: '0 4px 24px rgba(43,91,245,0.4)',
-            }}>
+
+            <a
+              href="mailto:aygulismayilova99@gmail.com"
+              className="inline-block px-8 py-4 bg-blue-600 rounded-xl font-bold shadow-lg"
+            >
               Request a free pilot →
             </a>
-            <p style={{ color: '#555', fontSize: '13px', marginTop: '20px' }}>
-              No commitment. No credit card. Just a working system in your facility.
-            </p>
           </div>
-        </div>
+        </section>
 
         {/* Footer */}
-        <div style={{
-          padding: '24px 40px',
-          borderTop: '1px solid #eaecf0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <img src="/logo.png" alt="FixInn" style={{ height: '28px' }} />
-          <p style={{ color: '#aaa', fontSize: '13px', margin: 0 }}>
+        <footer className="border-t border-gray-200 px-4 md:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+          <img src="/logo.png" alt="FixInn" className="h-6" />
+          <p className="text-xs text-gray-400">
             © 2026 FixInn · SCAN. REPORT. FIX.
           </p>
-        </div>
+        </footer>
 
       </div>
     </>
