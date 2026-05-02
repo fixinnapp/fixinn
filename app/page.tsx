@@ -2,182 +2,147 @@ export default function Home() {
   return (
     <>
       <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
       />
 
-      <div className="font-[DM_Sans] bg-white min-h-screen">
+      <div className="font-[DM_Sans] bg-white text-gray-900">
 
         {/* Navbar */}
-        <nav className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 md:px-10 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0">
-          <img src="/logo.png" alt="FixInn" className="h-8 md:h-10" />
+        <nav className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-gray-100">
+          <div className="max-w-[1100px] mx-auto px-4 py-4 flex items-center justify-between">
+            <img src="/logo.png" className="h-8" />
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <a
-              href="/login"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 text-center"
-            >
-              Staff login
-            </a>
-
-            <a
-              href="mailto:aygulismayilova99@gmail.com"
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold text-center shadow-md"
-            >
-              Request a demo →
-            </a>
+            <div className="hidden sm:flex items-center gap-4">
+              <a href="/login" className="text-sm font-medium text-gray-600 hover:text-black">
+                Staff login
+              </a>
+              <a
+                href="mailto:..."
+                className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold shadow-sm hover:bg-blue-700"
+              >
+                Request demo
+              </a>
+            </div>
           </div>
         </nav>
 
         {/* Hero */}
-        <section className="max-w-4xl mx-auto px-4 py-16 md:py-24 text-center">
+        <section className="py-20 md:py-28">
+          <div className="max-w-[720px] mx-auto px-4 text-center">
 
-          <div className="inline-flex items-center gap-2 bg-blue-50 px-4 py-1 rounded-full mb-6">
-            <div className="w-2 h-2 bg-blue-600 rounded-full" />
-            <span className="text-xs font-semibold text-blue-600">
+            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold mb-6">
+              <div className="w-2 h-2 bg-blue-600 rounded-full" />
               Now available in Norway
-            </span>
-          </div>
+            </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-black leading-tight tracking-tight mb-6">
-            Facility issues,<br />
-            <span className="text-blue-600">reported instantly.</span>
-          </h1>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+              Facility issues,
+              <br />
+              <span className="text-blue-600">reported instantly.</span>
+            </h1>
 
-          <p className="text-base md:text-lg text-gray-600 max-w-xl mx-auto mb-10 leading-relaxed">
-            Place a QR code on the wall. Staff and guests scan it to report problems in seconds — no app, no login, no back-and-forth emails.
-          </p>
+            <p className="text-lg text-gray-600 max-w-xl mx-auto leading-relaxed mb-10">
+              Place a QR code on the wall. Anyone scans and reports problems in seconds — no app, no login, no friction.
+            </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a
-              href="mailto:aygulismayilova99@gmail.com"
-              className="px-6 py-3 rounded-xl bg-blue-600 text-white font-bold shadow-lg"
-            >
-              Get a free pilot →
-            </a>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a className="px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700">
+                Get a free pilot
+              </a>
+              <a className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-50">
+                See demo
+              </a>
+            </div>
 
-            <a
-              href="/report/main-lobby"
-              className="px-6 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-700 font-semibold"
-            >
-              See a demo form
-            </a>
           </div>
         </section>
 
         {/* How it works */}
-        <section className="bg-gray-50 border-y border-gray-200 px-4 py-16 md:py-20">
-          <div className="max-w-4xl mx-auto">
+        <section className="py-20 border-y border-gray-100 bg-gray-50">
+          <div className="max-w-[1100px] mx-auto px-4">
 
-            <p className="text-center text-xs font-bold text-blue-600 tracking-widest uppercase mb-3">
-              How it works
-            </p>
+            <div className="text-center max-w-xl mx-auto mb-16">
+              <p className="text-xs font-semibold text-blue-600 tracking-widest uppercase mb-3">
+                How it works
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Three steps. That’s it.
+              </h2>
+            </div>
 
-            <h2 className="text-center text-2xl md:text-4xl font-extrabold mb-12">
-              Three steps. That's it.
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[
-                {
-                  step: '01',
-                  title: 'Scan',
-                  description: 'Someone spots a problem and scans the QR code on the wall.',
-                  emoji: '📱',
-                },
-                {
-                  step: '02',
-                  title: 'Report',
-                  description: 'They describe the issue and submit in under 30 seconds.',
-                  emoji: '📝',
-                },
-                {
-                  step: '03',
-                  title: 'Fix',
-                  description: 'Manager sees it instantly with full details.',
-                  emoji: '🔧',
-                },
-              ].map(item => (
-                <div key={item.step} className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                { title: 'Scan', desc: 'Scan QR code instantly.', emoji: '📱' },
+                { title: 'Report', desc: 'Submit in seconds.', emoji: '📝' },
+                { title: 'Fix', desc: 'Manager sees it instantly.', emoji: '🔧' },
+              ].map((item, i) => (
+                <div key={i} className="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md transition">
 
-                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-xl mb-4">
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
                     {item.emoji}
                   </div>
 
-                  <p className="text-xs font-bold text-blue-600 mb-1">
-                    STEP {item.step}
-                  </p>
-
-                  <h3 className="text-lg font-bold mb-2">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm text-gray-600">
-                    {item.description}
-                  </p>
+                  <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
                 </div>
               ))}
             </div>
+
           </div>
         </section>
 
-        {/* Who it's for */}
-        <section className="px-4 py-16 md:py-20">
-          <div className="max-w-4xl mx-auto">
+        {/* Use cases */}
+        <section className="py-20">
+          <div className="max-w-[1100px] mx-auto px-4">
 
-            <p className="text-center text-xs font-bold text-blue-600 tracking-widest uppercase mb-3">
-              Who it's for
-            </p>
+            <div className="text-center max-w-xl mx-auto mb-16">
+              <p className="text-xs font-semibold text-blue-600 tracking-widest uppercase mb-3">
+                Who it's for
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Built for any facility
+              </h2>
+            </div>
 
-            <h2 className="text-center text-2xl md:text-4xl font-extrabold mb-12">
-              Built for any facility.
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {[
-                { emoji: '🏨', title: 'Hotels' },
-                { emoji: '🏢', title: 'Offices' },
-                { emoji: '🏫', title: 'Schools' },
-                { emoji: '🏋️', title: 'Gyms' },
-                { emoji: '🏪', title: 'Shopping centers' },
-                { emoji: '🏗️', title: 'Property managers' },
-              ].map(item => (
-                <div key={item.title} className="bg-gray-50 rounded-xl p-5 border border-gray-200">
-                  <div className="text-2xl mb-2">{item.emoji}</div>
-                  <h3 className="font-bold">{item.title}</h3>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {['Hotels', 'Offices', 'Schools', 'Gyms', 'Retail', 'Property managers'].map((item) => (
+                <div key={item} className="border border-gray-200 rounded-lg p-5 bg-white hover:shadow-sm transition">
+                  <h3 className="font-medium">{item}</h3>
                 </div>
               ))}
             </div>
+
           </div>
         </section>
 
         {/* CTA */}
-        <section className="bg-black text-white px-4 py-16 md:py-20 text-center">
-          <div className="max-w-xl mx-auto">
+        <section className="py-24 bg-black text-white text-center">
+          <div className="max-w-xl mx-auto px-4">
 
-            <h2 className="text-2xl md:text-4xl font-extrabold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to try it?
             </h2>
 
             <p className="text-gray-400 mb-8">
-              Free pilots in Norway. Setup in 30 minutes.
+              Free pilots. Setup in 30 minutes.
             </p>
 
-            <a
-              href="mailto:aygulismayilova99@gmail.com"
-              className="inline-block px-8 py-4 bg-blue-600 rounded-xl font-bold shadow-lg"
-            >
-              Request a free pilot →
+            <a className="inline-block px-8 py-4 bg-blue-600 rounded-lg font-semibold hover:bg-blue-700">
+              Request a free pilot
             </a>
+
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-gray-200 px-4 md:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
-          <img src="/logo.png" alt="FixInn" className="h-6" />
-          <p className="text-xs text-gray-400">
-            © 2026 FixInn · SCAN. REPORT. FIX.
-          </p>
+        <footer className="border-t border-gray-100 py-6">
+          <div className="max-w-[1100px] mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <img src="/logo.png" className="h-6" />
+            <p className="text-xs text-gray-400">
+              © 2026 FixInn
+            </p>
+          </div>
         </footer>
 
       </div>
