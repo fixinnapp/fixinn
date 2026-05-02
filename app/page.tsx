@@ -76,27 +76,38 @@ export default function Home() {
                 {
                   title: 'Scan',
                   desc: 'Someone spots a problem and scans the QR code placed on the wall. It opens instantly in their browser — no app required.',
-                  emoji: '📱',
+                  icon: '📱',
                 },
                 {
                   title: 'Report',
                   desc: 'They select the issue type, add a quick description, and submit. The whole process takes less than 30 seconds.',
-                  emoji: '📝',
+                  icon: '📝',
                 },
                 {
                   title: 'Fix',
                   desc: 'The facility manager receives the report immediately with location, time, and all details already included.',
-                  emoji: '🔧',
+                  icon: '🔧',
                 },
               ].map((item, i) => (
-                <div key={i} className="bg-white p-5 md:p-6 rounded-xl border border-gray-200 hover:shadow-md transition">
+                <div
+                  key={i}
+                  className="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-md transition"
+                >
 
-                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-lg mb-4">
-                    {item.emoji}
+                  {/* ICON + TITLE (clean SaaS style) */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-base">
+                      {item.icon}
+                    </div>
+
+                    <h3 className="font-semibold text-lg">
+                      {item.title}
+                    </h3>
                   </div>
 
-                  <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>
@@ -120,46 +131,53 @@ export default function Home() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  emoji: '🏨',
+                  icon: '🏨',
                   title: 'Hotels',
                   desc: 'Guests and housekeeping can instantly report issues in rooms and shared spaces without contacting staff.',
                 },
                 {
-                  emoji: '🏢',
+                  icon: '🏢',
                   title: 'Office buildings',
                   desc: 'Employees report maintenance issues without emails, calls, or delays.',
                 },
                 {
-                  emoji: '🏫',
+                  icon: '🏫',
                   title: 'Schools',
                   desc: 'Teachers and students flag issues across the campus in seconds.',
                 },
                 {
-                  emoji: '🏋️',
+                  icon: '🏋️',
                   title: 'Gyms & sports centers',
                   desc: 'Members report broken equipment before it becomes a bigger problem.',
                 },
                 {
-                  emoji: '🏪',
+                  icon: '🏪',
                   title: 'Shopping centers',
                   desc: 'Tenants and visitors report shared space issues to one central team.',
                 },
                 {
-                  emoji: '🏗️',
+                  icon: '🏗️',
                   title: 'Property managers',
                   desc: 'Manage multiple buildings with full issue tracking and history.',
                 },
               ].map((item, i) => (
-                <div key={i} className="border border-gray-200 rounded-xl p-5 bg-white hover:shadow-sm transition">
+                <div
+                  key={i}
+                  className="border border-gray-100 rounded-xl p-5 bg-white hover:shadow-sm transition"
+                >
 
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-lg text-lg">
-                      {item.emoji}
+                    <div className="w-9 h-9 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-base">
+                      {item.icon}
                     </div>
 
                     <div>
-                      <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
-                      <p className="text-xs text-gray-600 leading-relaxed">{item.desc}</p>
+                      <h3 className="font-semibold text-sm mb-1">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        {item.desc}
+                      </p>
                     </div>
                   </div>
 
@@ -178,8 +196,8 @@ export default function Home() {
               Ready to try it?
             </h2>
 
-            <p className="text-gray-400 mb-8">
-              We’re offering free pilots to facilities in Norway. Get set up in 30 minutes — we place the QR codes ourselves.
+            <p className="text-gray-400 mb-8 leading-relaxed">
+              We’re offering free pilots to facilities in Norway. Get set up in 30 minutes — we place the QR codes ourselves and help you go live the same day.
             </p>
 
             <a className="inline-block px-8 py-4 bg-blue-600 rounded-lg font-semibold hover:bg-blue-700">
