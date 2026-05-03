@@ -1,4 +1,11 @@
+'use client'
+
+import { useState } from 'react'
+import ContactModal from '@/app/components/ContactModal'
+
 export default function Home() {
+  const [modal, setModal] = useState<string | null>(null)
+
   return (
     <>
       <link
@@ -6,26 +13,32 @@ export default function Home() {
         rel="stylesheet"
       />
 
+      {modal && (
+        <ContactModal
+          requestType={modal}
+          onClose={() => setModal(null)}
+        />
+      )}
+
       <div className="font-[DM_Sans] bg-white text-gray-900">
 
         {/* Navbar */}
-        <nav className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-gray-100">
-          <div className="max-w-[1100px] mx-auto px-4 py-4 flex items-center justify-between">
+<nav className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-gray-100">
+  <div className="max-w-[1100px] mx-auto px-4 py-4 flex items-center justify-between">
 
-            <img src="/logo.png" className="h-8" />
+    <img src="/logo.png" className="h-8" />
 
-            {/* RIGHT CORNER FIX */}
-            <div className="flex items-center justify-end w-full">
-              <a
-                href="/login"
-                className="text-sm font-medium text-gray-600 hover:text-black"
-              >
-                Staff login
-              </a>
-            </div>
+    <div className="flex items-center justify-end w-full">
+      <a
+        href="/login"
+        className="text-sm font-medium text-gray-600 hover:text-black"
+      >
+        Staff login
+      </a>
+    </div>
 
-          </div>
-        </nav>
+  </div>
+</nav>
 
         {/* Hero */}
         <section className="py-16 md:py-28">
@@ -46,18 +59,21 @@ export default function Home() {
               Place a QR code on the wall. Staff and guests scan it to report problems in seconds — no app, no login, no back-and-forth emails. Everything goes directly to the right person with location and context included.
             </p>
 
-            {/* HERO CTA FIX */}
             <div className="flex flex-col sm:flex-row justify-center gap-3">
 
-              {/* Primary */}
-              <a className="px-6 py-3 rounded-lg bg-blue-600 text-white text-sm sm:text-base font-semibold shadow hover:bg-blue-700">
+              <button
+                onClick={() => setModal('Free pilot')}
+                className="px-6 py-3 rounded-lg bg-blue-600 text-white text-sm sm:text-base font-semibold shadow hover:bg-blue-700 transition"
+              >
                 Get a free pilot
-              </a>
+              </button>
 
-              {/* Secondary */}
-              <a className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm sm:text-base font-medium hover:bg-gray-50">
+              <button
+                onClick={() => setModal('Demo request')}
+                className="px-6 py-3 rounded-lg border border-gray-200 text-gray-700 text-sm sm:text-base font-medium hover:bg-gray-50 transition"
+              >
                 Request a demo
-              </a>
+              </button>
 
             </div>
 
@@ -73,7 +89,7 @@ export default function Home() {
                 How it works
               </p>
               <h2 className="text-3xl md:text-4xl font-bold">
-                Three steps. That’s it.
+                Three steps. That's it.
               </h2>
             </div>
 
@@ -99,17 +115,14 @@ export default function Home() {
                   key={i}
                   className="bg-white p-6 rounded-xl border border-gray-100 hover:shadow-md transition"
                 >
-
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-9 h-9 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-base">
                       {item.icon}
                     </div>
-
                     <h3 className="font-semibold text-lg">
                       {item.title}
                     </h3>
                   </div>
-
                   <p className="text-sm text-gray-600 leading-relaxed">
                     {item.desc}
                   </p>
@@ -170,12 +183,10 @@ export default function Home() {
                   key={i}
                   className="border border-gray-100 rounded-xl p-5 bg-white hover:shadow-sm transition"
                 >
-
                   <div className="flex items-start gap-3">
                     <div className="w-9 h-9 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-base">
                       {item.icon}
                     </div>
-
                     <div>
                       <h3 className="font-semibold text-sm mb-1">
                         {item.title}
@@ -185,7 +196,6 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-
                 </div>
               ))}
             </div>
@@ -202,12 +212,15 @@ export default function Home() {
             </h2>
 
             <p className="text-gray-400 mb-8 leading-relaxed">
-              We’re offering free pilots to facilities in Norway. Get set up in 30 minutes — we place the QR codes ourselves and help you go live the same day.
+              We're offering free pilots to facilities in Norway. Get set up in 30 minutes — we place the QR codes ourselves and help you go live the same day.
             </p>
 
-            <a className="inline-block px-8 py-4 bg-blue-600 rounded-lg font-semibold hover:bg-blue-700">
+            <button
+              onClick={() => setModal('Free pilot')}
+              className="inline-block px-8 py-4 bg-blue-600 rounded-lg font-semibold hover:bg-blue-700 transition"
+            >
               Request a free pilot
-            </a>
+            </button>
 
           </div>
         </section>
