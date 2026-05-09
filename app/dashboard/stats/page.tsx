@@ -61,45 +61,42 @@ export default async function StatsPage() {
       : null
 
   const issueTypeCounts =
-    reports?.reduce((acc, r) => {
-      acc[r.issue_type] =
-        (acc[r.issue_type] ?? 0) + 1
+  reports?.reduce((acc, r) => {
+    acc[r.issue_type] =
+      (acc[r.issue_type] ?? 0) + 1
 
-      return acc
-    }, {} as Record<string, number>) ?? {}
+    return acc
+  }, {} as Record<string, number>) ?? {}
 
-  const issueTypeData = Object.entries(
-    issueTypeCounts
-  )
-    .map(([type, count]) => ({
-      type,
-      count,
-    }))
-    .sort((a, b) => b.count - a.count)
+const issueTypeData = (Object.entries(issueTypeCounts) as [string, number][])
+  .map(([type, count]) => ({
+    type,
+    count,
+  }))
+  .sort((a, b) => b.count - a.count)
 
-  const locationCounts =
-    reports?.reduce((acc, r) => {
-      const locationData = Array.isArray(r.locations)
-        ? r.locations[0]
-        : r.locations
 
-      const name =
-        locationData?.name ?? 'Unknown'
+const locationCounts =
+  reports?.reduce((acc, r) => {
+    const locationData = Array.isArray(r.locations)
+      ? r.locations[0]
+      : r.locations
 
-      acc[name] = (acc[name] ?? 0) + 1
+    const name =
+      locationData?.name ?? 'Unknown'
 
-      return acc
-    }, {} as Record<string, number>) ?? {}
+    acc[name] = (acc[name] ?? 0) + 1
 
-  const locationData = Object.entries(
-    locationCounts
-  )
-    .map(([location, count]) => ({
-      location,
-      count,
-    }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 6)
+    return acc
+  }, {} as Record<string, number>) ?? {}
+
+const locationData = (Object.entries(locationCounts) as [string, number][])
+  .map(([location, count]) => ({
+    location,
+    count,
+  }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 6)
 
   const weeklyData = Array.from(
     { length: 8 },
