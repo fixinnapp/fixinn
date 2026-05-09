@@ -41,22 +41,30 @@ export default function ReportCard({ report, staffList }: Props) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 
-  async function updateStatus(newStatus: string) {
-    setLoading(true)
-    const { error } = await supabase
-      .from('reports')
-      .update({ status: newStatus })
-      .eq('id', report.id)
-
-    if (!error) {
-      setPreviousStatus(status)
-      setStatus(newStatus)
-      setJustChanged(true)
-      setTimeout(() => setJustChanged(false), 5000)
-    }
-    setLoading(false)
-    router.refresh()
+ async function updateStatus(newStatus: string) {
+  setLoading(true)
+  const updateData: Record<string, string | null> = { status: newStatus }
+  
+  if (newStatus === 'resolved') {
+    updateData.resolved_at = new Date().toISOString()
+  } else {
+    updateData.resolved_at = null
   }
+
+  const { error } = await supabase
+    .from('reports')
+    .update(updateData)
+    .eq('id', report.id)
+
+  if (!error) {
+    setPreviousStatus(status)
+    setStatus(newStatus)
+    setJustChanged(true)
+    setTimeout(() => setJustChanged(false), 5000)
+  }
+  setLoading(false)
+  router.refresh()
+}
 
   async function undoStatus() {
     setLoading(true)
