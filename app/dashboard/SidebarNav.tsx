@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 interface Props {
   userEmail: string
@@ -15,9 +16,29 @@ export default function SidebarNav({
   const pathname = usePathname()
   const router = useRouter()
 
-  const isMobile =
-    typeof window !== 'undefined' &&
-    window.innerWidth <= 768
+  const [isMobile, setIsMobile] =
+    useState(false)
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(
+        window.innerWidth <= 768
+      )
+    }
+
+    handleResize()
+
+    window.addEventListener(
+      'resize',
+      handleResize
+    )
+
+    return () =>
+      window.removeEventListener(
+        'resize',
+        handleResize
+      )
+  }, [])
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -48,8 +69,9 @@ export default function SidebarNav({
   ]
 
   function isActive(href: string) {
-    if (href === '/dashboard')
+    if (href === '/dashboard') {
       return pathname === '/dashboard'
+    }
 
     return pathname.startsWith(href)
   }
@@ -57,8 +79,12 @@ export default function SidebarNav({
   return (
     <aside
       style={{
-        width: isMobile ? '100%' : '240px',
-        minHeight: isMobile ? 'auto' : '100vh',
+        width: isMobile
+          ? '100%'
+          : '240px',
+        minHeight: isMobile
+          ? 'auto'
+          : '100vh',
         background: '#ffffff',
         borderRight: isMobile
           ? 'none'
@@ -74,7 +100,9 @@ export default function SidebarNav({
           ? 'relative'
           : 'sticky',
         top: 0,
-        height: isMobile ? 'auto' : '100vh',
+        height: isMobile
+          ? 'auto'
+          : '100vh',
         flexShrink: 0,
         overflowX: isMobile
           ? 'auto'
@@ -82,6 +110,7 @@ export default function SidebarNav({
         zIndex: 20,
       }}
     >
+      {/* Logo */}
       <div
         style={{
           padding: isMobile
@@ -93,6 +122,7 @@ export default function SidebarNav({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexShrink: 0,
         }}
       >
         <img
@@ -106,6 +136,7 @@ export default function SidebarNav({
         />
       </div>
 
+      {/* Navigation */}
       <nav
         style={{
           padding: '12px',
@@ -130,7 +161,8 @@ export default function SidebarNav({
               fontWeight: '700',
               color: '#bbb',
               letterSpacing: '1px',
-              textTransform: 'uppercase',
+              textTransform:
+                'uppercase',
               padding: '8px 8px 4px',
               margin: 0,
             }}
@@ -140,7 +172,9 @@ export default function SidebarNav({
         )}
 
         {navItems.map((item) => {
-          const active = isActive(item.href)
+          const active = isActive(
+            item.href
+          )
 
           return (
             <Link
@@ -166,33 +200,41 @@ export default function SidebarNav({
                   ? '#f0f4ff'
                   : 'transparent',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content',
+                minWidth:
+                  'fit-content',
               }}
             >
               <span
-                style={{ fontSize: '16px' }}
+                style={{
+                  fontSize: '16px',
+                }}
               >
                 {item.icon}
               </span>
 
               {item.label}
 
-              {active && !isMobile && (
-                <div
-                  style={{
-                    marginLeft: 'auto',
-                    width: '6px',
-                    height: '6px',
-                    background: '#2B5BF5',
-                    borderRadius: '50%',
-                  }}
-                />
-              )}
+              {active &&
+                !isMobile && (
+                  <div
+                    style={{
+                      marginLeft:
+                        'auto',
+                      width: '6px',
+                      height: '6px',
+                      background:
+                        '#2B5BF5',
+                      borderRadius:
+                        '50%',
+                    }}
+                  />
+                )}
             </Link>
           )
         })}
       </nav>
 
+      {/* Desktop Footer */}
       {!isMobile && (
         <div
           style={{
@@ -216,11 +258,13 @@ export default function SidebarNav({
               style={{
                 width: '32px',
                 height: '32px',
-                background: '#2B5BF5',
+                background:
+                  '#2B5BF5',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent:
+                  'center',
                 color: 'white',
                 fontSize: '13px',
                 fontWeight: '700',
@@ -238,7 +282,8 @@ export default function SidebarNav({
                 color: '#666',
                 margin: 0,
                 overflow: 'hidden',
-                textOverflow: 'ellipsis',
+                textOverflow:
+                  'ellipsis',
                 whiteSpace: 'nowrap',
                 maxWidth: '140px',
               }}
@@ -255,7 +300,8 @@ export default function SidebarNav({
               borderRadius: '10px',
               border:
                 '1.5px solid #eaecf0',
-              background: 'transparent',
+              background:
+                'transparent',
               color: '#888',
               fontSize: '13px',
               fontWeight: '600',
