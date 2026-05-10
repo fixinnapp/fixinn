@@ -34,7 +34,10 @@ export default async function QRPage() {
   return (
     <div
       style={{
-        padding: '40px 32px',
+        padding:
+          'clamp(20px, 4vw, 40px) clamp(16px, 4vw, 32px)',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
       {/* Header */}
@@ -45,11 +48,14 @@ export default async function QRPage() {
       >
         <h1
           style={{
-            fontSize: '28px',
+            fontSize:
+              'clamp(24px, 5vw, 28px)',
             fontWeight: '700',
             color: '#0D0D0D',
             margin: 0,
             letterSpacing: '-0.4px',
+            lineHeight: 1.1,
+            wordBreak: 'break-word',
           }}
         >
           QR Codes
@@ -58,16 +64,29 @@ export default async function QRPage() {
         <p
           style={{
             color: '#888',
-            fontSize: '15px',
+            fontSize:
+              'clamp(14px, 3vw, 15px)',
             marginTop: '6px',
+            lineHeight: 1.5,
+            maxWidth: '720px',
           }}
         >
-          Print and place these at each location in your facility
+          Print and place these at each
+          location in your facility
         </p>
       </div>
 
       {/* QR Generator */}
-      <QRGenerator locations={locations ?? []} />
+      <div
+        style={{
+          width: '100%',
+          overflowX: 'hidden',
+        }}
+      >
+        <QRGenerator
+          locations={locations ?? []}
+        />
+      </div>
     </div>
   )
 }

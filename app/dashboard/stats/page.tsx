@@ -28,19 +28,29 @@ export default async function StatsPage() {
 
   const { data: reports } = await supabase
     .from('reports')
-    .select('*, locations(name, floor, building)')
-    .order('created_at', { ascending: false })
+    .select(
+      '*, locations(name, floor, building)'
+    )
+    .order('created_at', {
+      ascending: false,
+    })
 
   const total = reports?.length ?? 0
 
   const open =
-    reports?.filter((r) => r.status === 'open').length ?? 0
+    reports?.filter(
+      (r) => r.status === 'open'
+    ).length ?? 0
 
   const inProgress =
-    reports?.filter((r) => r.status === 'in_progress').length ?? 0
+    reports?.filter(
+      (r) => r.status === 'in_progress'
+    ).length ?? 0
 
   const resolved =
-    reports?.filter((r) => r.status === 'resolved').length ?? 0
+    reports?.filter(
+      (r) => r.status === 'resolved'
+    ).length ?? 0
 
   const resolvedReports =
     reports?.filter(
@@ -50,53 +60,79 @@ export default async function StatsPage() {
   const avgResolutionHours =
     resolvedReports.length > 0
       ? Math.round(
-          resolvedReports.reduce((sum, r) => {
-            const diff =
-              new Date(r.resolved_at).getTime() -
-              new Date(r.created_at).getTime()
+          resolvedReports.reduce(
+            (sum, r) => {
+              const diff =
+                new Date(
+                  r.resolved_at
+                ).getTime() -
+                new Date(
+                  r.created_at
+                ).getTime()
 
-            return sum + diff / (1000 * 60 * 60)
-          }, 0) / resolvedReports.length
+              return (
+                sum +
+                diff /
+                  (1000 * 60 * 60)
+              )
+            },
+            0
+          ) / resolvedReports.length
         )
       : null
 
   const issueTypeCounts =
-  reports?.reduce((acc, r) => {
-    acc[r.issue_type] =
-      (acc[r.issue_type] ?? 0) + 1
+    reports?.reduce((acc, r) => {
+      acc[r.issue_type] =
+        (acc[r.issue_type] ?? 0) + 1
 
-    return acc
-  }, {} as Record<string, number>) ?? {}
+      return acc
+    }, {} as Record<string, number>) ?? {}
 
-const issueTypeData = (Object.entries(issueTypeCounts) as [string, number][])
-  .map(([type, count]) => ({
-    type,
-    count,
-  }))
-  .sort((a, b) => b.count - a.count)
+  const issueTypeData = (
+    Object.entries(
+      issueTypeCounts
+    ) as [string, number][]
+  )
+    .map(([type, count]) => ({
+      type,
+      count,
+    }))
+    .sort(
+      (a, b) => b.count - a.count
+    )
 
+  const locationCounts =
+    reports?.reduce((acc, r) => {
+      const locationInfo =
+        Array.isArray(r.locations)
+          ? r.locations[0]
+          : r.locations
 
-const locationCounts =
-  reports?.reduce((acc, r) => {
-    const locationData = Array.isArray(r.locations)
-      ? r.locations[0]
-      : r.locations
+      const name =
+        locationInfo?.name ??
+        'Unknown'
 
-    const name =
-      locationData?.name ?? 'Unknown'
+      acc[name] =
+        (acc[name] ?? 0) + 1
 
-    acc[name] = (acc[name] ?? 0) + 1
+      return acc
+    }, {} as Record<string, number>) ??
+    {}
 
-    return acc
-  }, {} as Record<string, number>) ?? {}
-
-const locationData = (Object.entries(locationCounts) as [string, number][])
-  .map(([location, count]) => ({
-    location,
-    count,
-  }))
-  .sort((a, b) => b.count - a.count)
-  .slice(0, 6)
+  const locationData = (
+    Object.entries(
+      locationCounts
+    ) as [string, number][]
+  )
+    .map(([location, count]) => ({
+      location,
+      count,
+    }))
+    .sort(
+      (a, b) => b.count - a.count
+    )
+    .slice(0, 6)
 
   const weeklyData = Array.from(
     { length: 8 },
@@ -104,12 +140,20 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
       const weekStart = new Date()
 
       weekStart.setDate(
-        weekStart.getDate() - 7 * (7 - i)
+        weekStart.getDate() -
+          7 * (7 - i)
       )
 
-      weekStart.setHours(0, 0, 0, 0)
+      weekStart.setHours(
+        0,
+        0,
+        0,
+        0
+      )
 
-      const weekEnd = new Date(weekStart)
+      const weekEnd = new Date(
+        weekStart
+      )
 
       weekEnd.setDate(
         weekEnd.getDate() + 7
@@ -117,21 +161,25 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
 
       const count =
         reports?.filter((r) => {
-          const d = new Date(r.created_at)
+          const d = new Date(
+            r.created_at
+          )
 
           return (
-            d >= weekStart && d < weekEnd
+            d >= weekStart &&
+            d < weekEnd
           )
         }).length ?? 0
 
       return {
-        week: weekStart.toLocaleDateString(
-          'en-GB',
-          {
-            day: 'numeric',
-            month: 'short',
-          }
-        ),
+        week:
+          weekStart.toLocaleDateString(
+            'en-GB',
+            {
+              day: 'numeric',
+              month: 'short',
+            }
+          ),
         count,
       }
     }
@@ -140,7 +188,10 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
   return (
     <div
       style={{
-        padding: '40px 32px',
+        padding:
+          'clamp(20px, 4vw, 40px) clamp(16px, 4vw, 32px)',
+        width: '100%',
+        boxSizing: 'border-box',
       }}
     >
       {/* Header */}
@@ -151,11 +202,13 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
       >
         <h1
           style={{
-            fontSize: '28px',
+            fontSize:
+              'clamp(24px, 5vw, 28px)',
             fontWeight: '700',
             color: '#0D0D0D',
             margin: 0,
             letterSpacing: '-0.4px',
+            lineHeight: 1.1,
           }}
         >
           Statistics
@@ -164,11 +217,14 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
         <p
           style={{
             color: '#888',
-            fontSize: '15px',
+            fontSize:
+              'clamp(14px, 3vw, 15px)',
             marginTop: '6px',
+            lineHeight: 1.5,
           }}
         >
-          Overview of facility issues and performance
+          Overview of facility issues
+          and performance
         </p>
       </div>
 
@@ -177,9 +233,10 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
         style={{
           display: 'grid',
           gridTemplateColumns:
-            'repeat(auto-fit, minmax(220px, 1fr))',
+            'repeat(auto-fit, minmax(180px, 1fr))',
           gap: '16px',
           marginBottom: '24px',
+          width: '100%',
         }}
       >
         {[
@@ -217,8 +274,10 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
             style={{
               background: stat.bg,
               borderRadius: '14px',
-              padding: '20px 24px',
+              padding:
+                'clamp(16px, 3vw, 24px)',
               border: `1px solid ${stat.border}`,
+              minWidth: 0,
             }}
           >
             <p
@@ -234,11 +293,13 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
 
             <p
               style={{
-                fontSize: '36px',
+                fontSize:
+                  'clamp(28px, 6vw, 36px)',
                 fontWeight: '800',
                 color: stat.color,
                 margin: 0,
                 letterSpacing: '-1px',
+                wordBreak: 'break-word',
               }}
             >
               {stat.value}
@@ -252,7 +313,8 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
         style={{
           background: '#ffffff',
           borderRadius: '16px',
-          padding: '24px',
+          padding:
+            'clamp(18px, 4vw, 24px)',
           border: '1px solid #eaecf0',
           marginBottom: '24px',
           display: 'flex',
@@ -277,7 +339,12 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
           ⏱️
         </div>
 
-        <div>
+        <div
+          style={{
+            flex: '1 1 220px',
+            minWidth: 0,
+          }}
+        >
           <p
             style={{
               fontSize: '13px',
@@ -291,19 +358,35 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
 
           <p
             style={{
-              fontSize: '28px',
+              fontSize:
+                'clamp(22px, 5vw, 28px)',
               fontWeight: '800',
               color: '#0D0D0D',
               margin: 0,
               letterSpacing: '-0.5px',
+              lineHeight: 1.2,
+              wordBreak: 'break-word',
             }}
           >
             {avgResolutionHours !== null
-              ? avgResolutionHours < 24
-                ? `${avgResolutionHours}h`
-                : `${Math.round(
-                    avgResolutionHours / 24
-                  )}d`
+              ? avgResolutionHours < 1
+                ? 'Less than 1 hour'
+                : avgResolutionHours <
+                    24
+                  ? `${avgResolutionHours} hours`
+                  : avgResolutionHours <
+                      48
+                    ? `1 day ${
+                        avgResolutionHours %
+                        24
+                      } hours`
+                    : `${Math.floor(
+                        avgResolutionHours /
+                          24
+                      )} days ${
+                        avgResolutionHours %
+                        24
+                      } hours`
               : 'No resolved reports yet'}
           </p>
         </div>
@@ -312,7 +395,7 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
           <div
             style={{
               marginLeft: 'auto',
-              textAlign: 'right',
+              minWidth: '90px',
             }}
           >
             <p
@@ -327,7 +410,8 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
 
             <p
               style={{
-                fontSize: '28px',
+                fontSize:
+                  'clamp(24px, 5vw, 28px)',
                 fontWeight: '800',
                 color: '#065f46',
                 margin: 0,
@@ -335,7 +419,9 @@ const locationData = (Object.entries(locationCounts) as [string, number][])
             >
               {total > 0
                 ? Math.round(
-                    (resolved / total) * 100
+                    (resolved /
+                      total) *
+                      100
                   )
                 : 0}
               %

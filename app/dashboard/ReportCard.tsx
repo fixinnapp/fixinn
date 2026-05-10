@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import { useRouter } from 'next/navigation'
 
 interface Report {
   id: string
@@ -34,51 +33,61 @@ export default function ReportCard({ report, staffList }: Props) {
   const [previousStatus, setPreviousStatus] = useState(report.status)
   const [loading, setLoading] = useState(false)
   const [justChanged, setJustChanged] = useState(false)
-  const router = useRouter()
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 
- async function updateStatus(newStatus: string) {
-  setLoading(true)
-  const updateData: Record<string, string | null> = { status: newStatus }
-  
-  if (newStatus === 'resolved') {
-    updateData.resolved_at = new Date().toISOString()
-  } else {
-    updateData.resolved_at = null
-  }
+  async function updateStatus(newStatus: string) {
+    setLoading(true)
+    const updateData: Record<string, string | null> = { status: newStatus }
 
-  const { error } = await supabase
-    .from('reports')
-    .update(updateData)
-    .eq('id', report.id)
+    if (newStatus === 'resolved') {
+      updateData.resolved_at = new Date().toISOString()
+    } else {
+      updateData.resolved_at = null
+    }
 
-  if (!error) {
-    setPreviousStatus(status)
-    setStatus(newStatus)
-    setJustChanged(true)
-    setTimeout(() => setJustChanged(false), 5000)
+    const { error } = await supabase
+      .from('reports')
+      .update(updateData)
+      .eq('id', report.id)
+
+    if (!error) {
+      setPreviousStatus(status)
+      setStatus(newStatus)
+      setJustChanged(true)
+      setTimeout(() => {
+        window.location.reload()
+      }, 1500)
+    }
+    setLoading(false)
   }
-  setLoading(false)
-  router.refresh()
-}
 
   async function undoStatus() {
     setLoading(true)
+    const updateData: Record<string, string | null> = { status: previousStatus }
+
+    if (previousStatus === 'resolved') {
+      updateData.resolved_at = new Date().toISOString()
+    } else {
+      updateData.resolved_at = null
+    }
+
     const { error } = await supabase
       .from('reports')
-      .update({ status: previousStatus })
+      .update(updateData)
       .eq('id', report.id)
 
     if (!error) {
       setStatus(previousStatus)
       setJustChanged(false)
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
     }
     setLoading(false)
-    router.refresh()
   }
 
   async function handleAssign(name: string) {
@@ -87,7 +96,6 @@ export default function ReportCard({ report, staffList }: Props) {
       .from('reports')
       .update({ assigned_to: name || null })
       .eq('id', report.id)
-    router.refresh()
   }
 
   const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string; border: string }> = {
@@ -109,77 +117,87 @@ export default function ReportCard({ report, staffList }: Props) {
     fontFamily: '"DM Sans", sans-serif',
     cursor: loading ? 'not-allowed' : 'pointer',
     opacity: loading ? 0.6 : 1,
-    transition: 'all 0.15s',
   })
 
   return (
-    <div style={{
-      background: '#ffffff',
-      borderRadius: '16px',
-      padding: '22px 24px',
-      border: '1px solid #eaecf0',
-      boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-      opacity: status === 'resolved' ? 0.65 : 1,
-      transition: 'opacity 0.2s',
-    }}>
+    <div
+      style={{
+        background: '#ffffff',
+        borderRadius: '16px',
+        padding: '22px 24px',
+        border: '1px solid #eaecf0',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+        opacity: status === 'resolved' ? 0.65 : 1,
+        transition: 'opacity 0.2s',
+      }}
+    >
 
-      {/* Top row */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap' as const,
-        gap: '12px',
-        marginBottom: '12px'
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap' as const,
+          gap: '12px',
+          marginBottom: '12px',
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' as const }}>
-          <span style={{
-            background: '#f7f8fc',
-            border: '1px solid #eaecf0',
-            padding: '4px 12px',
-            borderRadius: '20px',
-            fontSize: '12px',
-            fontWeight: '700',
-            color: '#444',
-          }}>
+          <span
+            style={{
+              background: '#f7f8fc',
+              border: '1px solid #eaecf0',
+              padding: '4px 12px',
+              borderRadius: '20px',
+              fontSize: '12px',
+              fontWeight: '700',
+              color: '#444',
+            }}
+          >
             {report.issue_type}
           </span>
-          <span style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '4px 12px',
-            borderRadius: '20px',
-            fontSize: '12px',
-            fontWeight: '700',
-            background: current.bg,
-            color: current.text,
-            border: `1px solid ${current.border}`,
-          }}>
-            <span style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: current.dot,
-              flexShrink: 0
-            }} />
-            {current.label}
-          </span>
 
-          {/* Assigned badge */}
-          {assignedTo && (
-            <span style={{
+          <span
+            style={{
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
               padding: '4px 12px',
               borderRadius: '20px',
               fontSize: '12px',
-              fontWeight: '600',
-              background: '#f7f8fc',
-              color: '#444',
-              border: '1px solid #eaecf0',
-            }}>
+              fontWeight: '700',
+              background: current.bg,
+              color: current.text,
+              border: `1px solid ${current.border}`,
+            }}
+          >
+            <span
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: current.dot,
+                flexShrink: 0,
+              }}
+            />
+            {current.label}
+          </span>
+
+          {assignedTo && (
+            <span
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '4px 12px',
+                borderRadius: '20px',
+                fontSize: '12px',
+                fontWeight: '600',
+                background: '#f7f8fc',
+                color: '#444',
+                border: '1px solid #eaecf0',
+              }}
+            >
               👤 {assignedTo}
             </span>
           )}
@@ -192,37 +210,31 @@ export default function ReportCard({ report, staffList }: Props) {
         </span>
       </div>
 
-      {/* Description */}
-      <p style={{
-        color: '#333',
-        fontSize: '15px',
-        margin: '0 0 10px',
-        lineHeight: '1.6',
-      }}>
+      <p style={{ color: '#333', fontSize: '15px', margin: '0 0 10px', lineHeight: '1.6' }}>
         {report.description}
       </p>
 
-      {/* Location */}
-      <p style={{
-        color: '#aaa',
-        fontSize: '13px',
-        margin: '0 0 16px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '6px',
-      }}>
+      <p
+        style={{
+          color: '#aaa',
+          fontSize: '13px',
+          margin: '0 0 16px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+        }}
+      >
         <span style={{ color: '#2B5BF5' }}>📍</span>
         {report.locations?.name}
         {report.locations?.floor ? ` · ${report.locations.floor}` : ''}
         {report.locations?.building ? ` · ${report.locations.building}` : ''}
       </p>
 
-      {/* Assign dropdown */}
       {staffList.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
           <select
             value={assignedTo}
-            onChange={e => handleAssign(e.target.value)}
+            onChange={function(e) { handleAssign(e.target.value) }}
             style={{
               padding: '9px 14px',
               borderRadius: '8px',
@@ -237,27 +249,30 @@ export default function ReportCard({ report, staffList }: Props) {
             }}
           >
             <option value="">Assign to...</option>
-            {staffList.map(s => (
-              <option key={s.id} value={s.name}>{s.name}</option>
-            ))}
+            {staffList.map(function(s) {
+              return (
+                <option key={s.id} value={s.name}>{s.name}</option>
+              )
+            })}
           </select>
         </div>
       )}
 
-      {/* Undo banner */}
       {justChanged && (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          background: '#f7f8fc',
-          borderRadius: '10px',
-          padding: '10px 16px',
-          fontSize: '13px',
-          color: '#444',
-          border: '1px solid #eaecf0',
-          marginBottom: '12px',
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: '#f7f8fc',
+            borderRadius: '10px',
+            padding: '10px 16px',
+            fontSize: '13px',
+            color: '#444',
+            border: '1px solid #eaecf0',
+            marginBottom: '12px',
+          }}
+        >
           <span>Status updated to <strong>{current.label}</strong></span>
           <button
             onClick={undoStatus}
@@ -271,7 +286,7 @@ export default function ReportCard({ report, staffList }: Props) {
               cursor: 'pointer',
               fontFamily: '"DM Sans", sans-serif',
               padding: '0',
-              textDecoration: 'underline'
+              textDecoration: 'underline',
             }}
           >
             Undo
@@ -279,36 +294,36 @@ export default function ReportCard({ report, staffList }: Props) {
         </div>
       )}
 
-      {/* Action buttons */}
       {!justChanged && (
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' as const }}>
           {status === 'open' && (
             <>
-              <button onClick={() => updateStatus('in_progress')} style={btnStyle('#2B5BF5')}>
+              <button onClick={function() { updateStatus('in_progress') }} style={btnStyle('#2B5BF5')}>
                 Mark in progress
               </button>
-              <button onClick={() => updateStatus('resolved')} style={btnStyle('#10b981')}>
+              <button onClick={function() { updateStatus('resolved') }} style={btnStyle('#10b981')}>
                 Resolve directly
               </button>
             </>
           )}
           {status === 'in_progress' && (
             <>
-              <button onClick={() => updateStatus('resolved')} style={btnStyle('#10b981')}>
+              <button onClick={function() { updateStatus('resolved') }} style={btnStyle('#10b981')}>
                 Mark resolved ✓
               </button>
-              <button onClick={() => updateStatus('open')} style={btnStyle('#aaa')}>
+              <button onClick={function() { updateStatus('open') }} style={btnStyle('#aaa')}>
                 Back to open
               </button>
             </>
           )}
           {status === 'resolved' && (
-            <button onClick={() => updateStatus('open')} style={btnStyle('#aaa')}>
+            <button onClick={function() { updateStatus('open') }} style={btnStyle('#aaa')}>
               Reopen
             </button>
           )}
         </div>
       )}
+
     </div>
   )
 }
